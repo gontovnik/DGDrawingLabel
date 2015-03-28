@@ -1,0 +1,440 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		056FD4021AC463C4006CF65C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 056FD4011AC463C4006CF65C /* main.m */; };
+		056FD4051AC463C4006CF65C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 056FD4041AC463C4006CF65C /* AppDelegate.m */; };
+		056FD4081AC463C4006CF65C /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 056FD4071AC463C4006CF65C /* NewsViewController.m */; };
+		056FD40D1AC463C4006CF65C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 056FD40C1AC463C4006CF65C /* Images.xcassets */; };
+		056FD41C1AC463C5006CF65C /* DGDrawingLabelExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 056FD41B1AC463C5006CF65C /* DGDrawingLabelExampleTests.m */; };
+		056FD4281AC46401006CF65C /* DGDrawingLabel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 056FD4271AC46401006CF65C /* DGDrawingLabel.mm */; };
+		056FD4341AC46645006CF65C /* NewsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 056FD4331AC46645006CF65C /* NewsTableViewCell.m */; };
+		056FD4381AC4678E006CF65C /* DGDrawingLabelLayoutData.mm in Sources */ = {isa = PBXBuildFile; fileRef = 056FD4371AC4678E006CF65C /* DGDrawingLabelLayoutData.mm */; };
+		056FD43B1AC46D44006CF65C /* NewsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 056FD43A1AC46D44006CF65C /* NewsModel.m */; };
+		056FD4401AC487D9006CF65C /* news.json in Resources */ = {isa = PBXBuildFile; fileRef = 056FD43F1AC487D9006CF65C /* news.json */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		056FD4161AC463C5006CF65C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 056FD3F41AC463C4006CF65C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 056FD3FB1AC463C4006CF65C;
+			remoteInfo = DGDrawingLabelExample;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		056FD3FC1AC463C4006CF65C /* DGDrawingLabelExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DGDrawingLabelExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		056FD4001AC463C4006CF65C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		056FD4011AC463C4006CF65C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		056FD4031AC463C4006CF65C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		056FD4041AC463C4006CF65C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		056FD4061AC463C4006CF65C /* NewsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
+		056FD4071AC463C4006CF65C /* NewsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
+		056FD40C1AC463C4006CF65C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		056FD4151AC463C5006CF65C /* DGDrawingLabelExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DGDrawingLabelExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		056FD41A1AC463C5006CF65C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		056FD41B1AC463C5006CF65C /* DGDrawingLabelExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DGDrawingLabelExampleTests.m; sourceTree = "<group>"; };
+		056FD4261AC46401006CF65C /* DGDrawingLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGDrawingLabel.h; sourceTree = "<group>"; };
+		056FD4271AC46401006CF65C /* DGDrawingLabel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DGDrawingLabel.mm; sourceTree = "<group>"; };
+		056FD4321AC46645006CF65C /* NewsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsTableViewCell.h; sourceTree = "<group>"; };
+		056FD4331AC46645006CF65C /* NewsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsTableViewCell.m; sourceTree = "<group>"; };
+		056FD4361AC4678E006CF65C /* DGDrawingLabelLayoutData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGDrawingLabelLayoutData.h; sourceTree = "<group>"; };
+		056FD4371AC4678E006CF65C /* DGDrawingLabelLayoutData.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DGDrawingLabelLayoutData.mm; sourceTree = "<group>"; };
+		056FD4391AC46D44006CF65C /* NewsModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewsModel.h; sourceTree = "<group>"; };
+		056FD43A1AC46D44006CF65C /* NewsModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewsModel.m; sourceTree = "<group>"; };
+		056FD43F1AC487D9006CF65C /* news.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = news.json; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		056FD3F91AC463C4006CF65C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		056FD4121AC463C5006CF65C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		056FD3F31AC463C4006CF65C = {
+			isa = PBXGroup;
+			children = (
+				056FD3FE1AC463C4006CF65C /* DGDrawingLabelExample */,
+				056FD4181AC463C5006CF65C /* DGDrawingLabelExampleTests */,
+				056FD3FD1AC463C4006CF65C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		056FD3FD1AC463C4006CF65C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				056FD3FC1AC463C4006CF65C /* DGDrawingLabelExample.app */,
+				056FD4151AC463C5006CF65C /* DGDrawingLabelExampleTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		056FD3FE1AC463C4006CF65C /* DGDrawingLabelExample */ = {
+			isa = PBXGroup;
+			children = (
+				056FD4251AC46401006CF65C /* DGDrawingLabel */,
+				056FD4031AC463C4006CF65C /* AppDelegate.h */,
+				056FD4041AC463C4006CF65C /* AppDelegate.m */,
+				056FD4061AC463C4006CF65C /* NewsViewController.h */,
+				056FD4071AC463C4006CF65C /* NewsViewController.m */,
+				056FD4321AC46645006CF65C /* NewsTableViewCell.h */,
+				056FD4331AC46645006CF65C /* NewsTableViewCell.m */,
+				056FD4391AC46D44006CF65C /* NewsModel.h */,
+				056FD43A1AC46D44006CF65C /* NewsModel.m */,
+				056FD40C1AC463C4006CF65C /* Images.xcassets */,
+				056FD3FF1AC463C4006CF65C /* Supporting Files */,
+			);
+			path = DGDrawingLabelExample;
+			sourceTree = "<group>";
+		};
+		056FD3FF1AC463C4006CF65C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				056FD43F1AC487D9006CF65C /* news.json */,
+				056FD4001AC463C4006CF65C /* Info.plist */,
+				056FD4011AC463C4006CF65C /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		056FD4181AC463C5006CF65C /* DGDrawingLabelExampleTests */ = {
+			isa = PBXGroup;
+			children = (
+				056FD41B1AC463C5006CF65C /* DGDrawingLabelExampleTests.m */,
+				056FD4191AC463C5006CF65C /* Supporting Files */,
+			);
+			path = DGDrawingLabelExampleTests;
+			sourceTree = "<group>";
+		};
+		056FD4191AC463C5006CF65C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				056FD41A1AC463C5006CF65C /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		056FD4251AC46401006CF65C /* DGDrawingLabel */ = {
+			isa = PBXGroup;
+			children = (
+				056FD4361AC4678E006CF65C /* DGDrawingLabelLayoutData.h */,
+				056FD4371AC4678E006CF65C /* DGDrawingLabelLayoutData.mm */,
+				056FD4261AC46401006CF65C /* DGDrawingLabel.h */,
+				056FD4271AC46401006CF65C /* DGDrawingLabel.mm */,
+			);
+			path = DGDrawingLabel;
+			sourceTree = SOURCE_ROOT;
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		056FD3FB1AC463C4006CF65C /* DGDrawingLabelExample */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 056FD41F1AC463C5006CF65C /* Build configuration list for PBXNativeTarget "DGDrawingLabelExample" */;
+			buildPhases = (
+				056FD3F81AC463C4006CF65C /* Sources */,
+				056FD3F91AC463C4006CF65C /* Frameworks */,
+				056FD3FA1AC463C4006CF65C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DGDrawingLabelExample;
+			productName = DGDrawingLabelExample;
+			productReference = 056FD3FC1AC463C4006CF65C /* DGDrawingLabelExample.app */;
+			productType = "com.apple.product-type.application";
+		};
+		056FD4141AC463C5006CF65C /* DGDrawingLabelExampleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 056FD4221AC463C5006CF65C /* Build configuration list for PBXNativeTarget "DGDrawingLabelExampleTests" */;
+			buildPhases = (
+				056FD4111AC463C5006CF65C /* Sources */,
+				056FD4121AC463C5006CF65C /* Frameworks */,
+				056FD4131AC463C5006CF65C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				056FD4171AC463C5006CF65C /* PBXTargetDependency */,
+			);
+			name = DGDrawingLabelExampleTests;
+			productName = DGDrawingLabelExampleTests;
+			productReference = 056FD4151AC463C5006CF65C /* DGDrawingLabelExampleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		056FD3F41AC463C4006CF65C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Danil Gontovnik";
+				TargetAttributes = {
+					056FD3FB1AC463C4006CF65C = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					056FD4141AC463C5006CF65C = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = 056FD3FB1AC463C4006CF65C;
+					};
+				};
+			};
+			buildConfigurationList = 056FD3F71AC463C4006CF65C /* Build configuration list for PBXProject "DGDrawingLabelExample" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 056FD3F31AC463C4006CF65C;
+			productRefGroup = 056FD3FD1AC463C4006CF65C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				056FD3FB1AC463C4006CF65C /* DGDrawingLabelExample */,
+				056FD4141AC463C5006CF65C /* DGDrawingLabelExampleTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		056FD3FA1AC463C4006CF65C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				056FD4401AC487D9006CF65C /* news.json in Resources */,
+				056FD40D1AC463C4006CF65C /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		056FD4131AC463C5006CF65C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		056FD3F81AC463C4006CF65C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				056FD4381AC4678E006CF65C /* DGDrawingLabelLayoutData.mm in Sources */,
+				056FD4081AC463C4006CF65C /* NewsViewController.m in Sources */,
+				056FD4341AC46645006CF65C /* NewsTableViewCell.m in Sources */,
+				056FD4051AC463C4006CF65C /* AppDelegate.m in Sources */,
+				056FD4021AC463C4006CF65C /* main.m in Sources */,
+				056FD4281AC46401006CF65C /* DGDrawingLabel.mm in Sources */,
+				056FD43B1AC46D44006CF65C /* NewsModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		056FD4111AC463C5006CF65C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				056FD41C1AC463C5006CF65C /* DGDrawingLabelExampleTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		056FD4171AC463C5006CF65C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 056FD3FB1AC463C4006CF65C /* DGDrawingLabelExample */;
+			targetProxy = 056FD4161AC463C5006CF65C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		056FD41D1AC463C5006CF65C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		056FD41E1AC463C5006CF65C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		056FD4201AC463C5006CF65C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = DGDrawingLabelExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		056FD4211AC463C5006CF65C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = DGDrawingLabelExample/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		056FD4231AC463C5006CF65C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = DGDrawingLabelExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DGDrawingLabelExample.app/DGDrawingLabelExample";
+			};
+			name = Debug;
+		};
+		056FD4241AC463C5006CF65C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = DGDrawingLabelExampleTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DGDrawingLabelExample.app/DGDrawingLabelExample";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		056FD3F71AC463C4006CF65C /* Build configuration list for PBXProject "DGDrawingLabelExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				056FD41D1AC463C5006CF65C /* Debug */,
+				056FD41E1AC463C5006CF65C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		056FD41F1AC463C5006CF65C /* Build configuration list for PBXNativeTarget "DGDrawingLabelExample" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				056FD4201AC463C5006CF65C /* Debug */,
+				056FD4211AC463C5006CF65C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		056FD4221AC463C5006CF65C /* Build configuration list for PBXNativeTarget "DGDrawingLabelExampleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				056FD4231AC463C5006CF65C /* Debug */,
+				056FD4241AC463C5006CF65C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 056FD3F41AC463C4006CF65C /* Project object */;
+}
