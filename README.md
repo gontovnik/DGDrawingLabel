@@ -44,6 +44,11 @@ textLabel.frame = frame;
 
 For more complex usage see example project. It shows how to use it to achieve high-performance scroll with dynamic cells.
 
+## TODO
+
+* Allow to add different attributes for ranges;
+* Detect URLs / hashtags / usernames.
+
 ## Contact
 
 Danil Gontovnik
@@ -52,7 +57,6 @@ Danil Gontovnik
 - https://twitter.com/gontovnik
 - http://gontovnik.com/
 - gontovnik.danil@gmail.com
-
 
 ## License
 
