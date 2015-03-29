@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		056C22231AC7591C00B040B9 /* DGDrawingLabelAttributedRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 056C22221AC7591C00B040B9 /* DGDrawingLabelAttributedRange.m */; };
 		056FD4021AC463C4006CF65C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 056FD4011AC463C4006CF65C /* main.m */; };
 		056FD4051AC463C4006CF65C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 056FD4041AC463C4006CF65C /* AppDelegate.m */; };
 		056FD4081AC463C4006CF65C /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 056FD4071AC463C4006CF65C /* NewsViewController.m */; };
@@ -30,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		056C22211AC7591C00B040B9 /* DGDrawingLabelAttributedRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DGDrawingLabelAttributedRange.h; sourceTree = "<group>"; };
+		056C22221AC7591C00B040B9 /* DGDrawingLabelAttributedRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DGDrawingLabelAttributedRange.m; sourceTree = "<group>"; };
 		056FD3FC1AC463C4006CF65C /* DGDrawingLabelExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DGDrawingLabelExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		056FD4001AC463C4006CF65C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		056FD4011AC463C4006CF65C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 				056FD4371AC4678E006CF65C /* DGDrawingLabelLayoutData.mm */,
 				056FD4261AC46401006CF65C /* DGDrawingLabel.h */,
 				056FD4271AC46401006CF65C /* DGDrawingLabel.mm */,
+				056C22211AC7591C00B040B9 /* DGDrawingLabelAttributedRange.h */,
+				056C22221AC7591C00B040B9 /* DGDrawingLabelAttributedRange.m */,
 			);
 			path = DGDrawingLabel;
 			sourceTree = SOURCE_ROOT;
@@ -249,6 +254,7 @@
 				056FD4051AC463C4006CF65C /* AppDelegate.m in Sources */,
 				056FD4021AC463C4006CF65C /* main.m in Sources */,
 				056FD4281AC46401006CF65C /* DGDrawingLabel.mm in Sources */,
+				056C22231AC7591C00B040B9 /* DGDrawingLabelAttributedRange.m in Sources */,
 				056FD43B1AC46D44006CF65C /* NewsModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

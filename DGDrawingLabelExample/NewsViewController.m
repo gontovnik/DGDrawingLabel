@@ -62,11 +62,19 @@
 - (DGDrawingLabelLayoutData *)precalculatedLayoutForModelAtIndexPath:(NSIndexPath *)indexPath {
     NewsModel *model = _news[indexPath.row];
     if (!model.precalculatedLayout) {
+        
+        NSRange range = [model.text rangeOfString:@"and"];
+        DGDrawingLabelAttributedRange *attributedRange = [[DGDrawingLabelAttributedRange alloc] initWithAttributes:@{NSForegroundColorAttributeName : [UIColor redColor],
+                                                                                                                     NSFontAttributeName : [UIFont boldSystemFontOfSize:20],
+                                                                                                                     NSBackgroundColorAttributeName : [UIColor yellowColor]} range:range];
+        NSArray *attributedRanges = @[attributedRange];
+        
         model.precalculatedLayout = [DGDrawingLabel calculateLayoutWithText:model.text
                                                                        font:[UIFont systemFontOfSize:16.0f]
                                                               textAlignment:NSTextAlignmentCenter
                                                                   textColor:[UIColor grayColor]
-                                                                   maxWidth:_tableView.bounds.size.width];
+                                                                   maxWidth:_tableView.bounds.size.width
+                                                           attributedRanges:attributedRanges];
     }
     return model.precalculatedLayout;
 }

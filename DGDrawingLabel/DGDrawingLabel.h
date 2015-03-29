@@ -10,6 +10,7 @@
 #import <CoreText/CoreText.h>
 
 #import "DGDrawingLabelLayoutData.h"
+#import "DGDrawingLabelAttributedRange.h"
 
 @interface DGDrawingLabel : UIView
 
@@ -19,8 +20,18 @@
                                                  font:(UIFont *)font
                                         textAlignment:(NSTextAlignment)textAlignment
                                             textColor:(UIColor *)textColor
+                                             maxWidth:(float)maxWidth
+                                     attributedRanges:(NSArray *)attributedRanges;
+
++ (DGDrawingLabelLayoutData *)calculateLayoutWithText:(NSString *)text
+                                                 font:(UIFont *)font
+                                        textAlignment:(NSTextAlignment)textAlignment
+                                            textColor:(UIColor *)textColor
                                              maxWidth:(float)maxWidth;
 
++ (DGDrawingLabelLayoutData *)calculateLayoutWithText:(NSString *)text
+                                                 font:(UIFont *)font
+                                             maxWidth:(float)maxWidth;
 
 + (void)drawTextInRect:(CGRect)rect withPrecalculatedLayout:(DGDrawingLabelLayoutData *)precalculatedLayout;
 

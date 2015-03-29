@@ -27,7 +27,9 @@
                                                  font:(UIFont *)font
                                         textAlignment:(NSTextAlignment)textAlignment
                                             textColor:(UIColor *)textColor
-                                             maxWidth:(float)maxWidth {
+                                             maxWidth:(float)maxWidth
+                                     attributedRanges:(NSArray *)attributedRanges {
+    
     if (!text) {
         return nil;
     }
@@ -52,7 +54,15 @@
                                  (NSString *)kCTKernAttributeName : [[NSNumber alloc] initWithFloat:0.0f],
                                  (NSString *)kCTForegroundColorAttributeName : (__bridge id)textColor.CGColor};
     
-    NSAttributedString *string = [[NSAttributedString alloc] initWithString:text attributes:attributes];
+    NSMutableAttributedString *string = [[NSMutableAttributedString alloc] initWithString:text attributes:attributes];
+    
+    if (attributedRanges) {
+        [attributedRanges enumerateObjectsUsingBlock:^(DGDrawingLabelAttributedRange *attributedRange, NSUInteger idx, BOOL *stop) {
+            [attributedRange.attributes enumerateKeysAndObjectsUsingBlock:^(NSString *key, id attribute, BOOL *stop) {
+                CFAttributedStringSetAttribute((CFMutableAttributedStringRef)string, CFRangeFromNSRange(attributedRange.range), adjustKey(key), (__bridge CFTypeRef)attribute);
+            }];
+        }];
+    }
     
     std::vector<DGDrawingLabelLinePosition> *pLineOrigins = layout.lineOrigins;
     
@@ -85,8 +95,8 @@
             
             currentLineOffset += fontLineHeight;
             DGDrawingLabelLinePosition linePosition = { .offset = currentLineOffset,
-                                                        .alignment = (rightAligned ? NSTextAlignmentRight : textAlignment),
-                                                        .lineWidth = lineWidth};
+                .alignment = (rightAligned ? NSTextAlignmentRight : textAlignment),
+                .lineWidth = lineWidth};
             pLineOrigins->push_back(linePosition);
             
             rect.size.height += fontLineHeight;
@@ -111,6 +121,45 @@
     }
     
     return layout;
+}
+
++ (DGDrawingLabelLayoutData *)calculateLayoutWithText:(NSString *)text
+                                                 font:(UIFont *)font
+                                        textAlignment:(NSTextAlignment)textAlignment
+                                            textColor:(UIColor *)textColor
+                                             maxWidth:(float)maxWidth {
+    return [DGDrawingLabel calculateLayoutWithText:text
+                                              font:font
+                                     textAlignment:textAlignment
+                                         textColor:textColor
+                                          maxWidth:maxWidth
+                                  attributedRanges:nil];
+}
+
++ (DGDrawingLabelLayoutData *)calculateLayoutWithText:(NSString *)text
+                                                 font:(UIFont *)font
+                                             maxWidth:(float)maxWidth {
+    return [DGDrawingLabel calculateLayoutWithText:text
+                                              font:font
+                                     textAlignment:NSTextAlignmentLeft
+                                         textColor:[UIColor blackColor]
+                                          maxWidth:maxWidth
+                                  attributedRanges:nil];
+}
+
+#pragma mark -
+#pragma mark Helpers
+
+CFRange CFRangeFromNSRange(NSRange range) {
+    return CFRangeMake(range.location, range.length);
+}
+
+CFStringRef adjustKey(NSString *key) {
+    if ([key isEqualToString:NSForegroundColorAttributeName]) {
+        return kCTForegroundColorAttributeName;
+    }
+    
+    return (__bridge CFStringRef)key;
 }
 
 #pragma mark -
