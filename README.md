@@ -28,13 +28,18 @@ All you need to do is drop DGDrawingLabel files into your project, and add inclu
 DGDrawingLabel *textLabel = [[DGDrawingLabel alloc] init];
 textLabel.backgroundColor = [UIColor whiteColor];
 [self.view addSubview:textLabel];
+        
+NSRange range = NSMakeRange(0, 5);
+DGDrawingLabelAttributedRange *attributedRange = [[DGDrawingLabelAttributedRange alloc] initWithAttributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont boldSystemFontOfSize:20]} range:range];
+NSArray *attributedRanges = @[attributedRange];
 
 // Calculating layout
 textLabel.precalculatedLayout = [DGDrawingLabel calculateLayoutWithText:@"text goes here"
                                                                    font:[UIFont systemFontOfSize:16.0f]
                                                           textAlignment:NSTextAlignmentCenter
                                                               textColor:[UIColor grayColor]
-                                                               maxWidth:self.view.bounds.size.width];
+                                                               maxWidth:self.view.bounds.size.width
+                                                       attributedRanges:attributedRanges];
                                                                
 // Calculating and setting frame. On  setFrame it will call setNeedsDisplay and will draw text using precalculated layout.
 CGRect frame = CGRectZero;
@@ -46,7 +51,7 @@ For more complex usage see example project. It shows how to use it to achieve hi
 
 ## TODO
 
-* Allow to add different attributes for ranges;
+* Add support for NSBackgroundColorAttributeName;
 * Detect URLs / hashtags / usernames.
 
 ## Contact
