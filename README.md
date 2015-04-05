@@ -24,27 +24,46 @@ All you need to do is drop DGDrawingLabel files into your project, and add inclu
 ## Example usage
 
 ``` objective-c
-// Addint label to view
-DGDrawingLabel *textLabel = [[DGDrawingLabel alloc] init];
-textLabel.backgroundColor = [UIColor whiteColor];
-[self.view addSubview:textLabel];
-        
-NSRange range = NSMakeRange(0, 5);
-DGDrawingLabelAttributedRange *attributedRange = [[DGDrawingLabelAttributedRange alloc] initWithAttributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont boldSystemFontOfSize:20]} range:range];
-NSArray *attributedRanges = @[attributedRange];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Adding label to view
+    DGDrawingLabel *textLabel = [[DGDrawingLabel alloc] init];
+    textLabel.backgroundColor = [UIColor whiteColor];
+    textLabel.delegate = self;
+    [self.view addSubview:textLabel];
+    
+    NSRange range = NSMakeRange(0, 5);
+    DGDrawingLabelAttributedRange *attributedRange = [[DGDrawingLabelAttributedRange alloc] initWithAttributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont boldSystemFontOfSize:16]} range:range];
+    NSArray *attributedRanges = @[attributedRange];
+    
+    // Calculating layout
+    textLabel.precalculatedLayout = [DGDrawingLabel calculateLayoutWithText:@"Text goes here. (c) @danil \nhttps://github.com/gontovnik"
+                                                                       font:[UIFont systemFontOfSize:16.0f]
+                                                              textAlignment:NSTextAlignmentLeft
+                                                                  textColor:[UIColor grayColor]
+                                                                   maxWidth:self.view.bounds.size.width
+                                                              linkDetection:(DGDrawingLabelDetectionHashtags | DGDrawingLabelDetectionURLs | DGDrawingLabelDetectionUsernames)
+                                                             linkAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:0.0f green:0.3f blue:0.8f alpha:1.0f]}
+                                                           attributedRanges:attributedRanges];
+    
+    // Calculating and setting frame. On  setFrame it will call setNeedsDisplay and will draw text using precalculated layout.
+    CGRect frame = CGRectZero;
+    frame.origin.y = 100;
+    frame.size = textLabel.precalculatedLayout.size;
+    textLabel.frame = frame;
+}
 
-// Calculating layout
-textLabel.precalculatedLayout = [DGDrawingLabel calculateLayoutWithText:@"text goes here"
-                                                                   font:[UIFont systemFontOfSize:16.0f]
-                                                          textAlignment:NSTextAlignmentCenter
-                                                              textColor:[UIColor grayColor]
-                                                               maxWidth:self.view.bounds.size.width
-                                                       attributedRanges:attributedRanges];
-                                                               
-// Calculating and setting frame. On  setFrame it will call setNeedsDisplay and will draw text using precalculated layout.
-CGRect frame = CGRectZero;
-frame.size = textLabel.precalculatedLayout.size;
-textLabel.frame = frame;
+#pragma mark -
+#pragma mark DGDrawingLabel Delegate
+
+- (void)drawingLabel:(DGDrawingLabel *)drawingLabel didPressAtLink:(NSString *)link withType:(DGDrawingLabelLinkType)linkType {
+    NSLog(@"%@", link);
+    
+    if (linkType == DGDrawingLabelLinkTypeURL) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
+    }
+    
+}
 ```
 
 For more complex usage see example project. It shows how to use it to achieve high-performance scroll with dynamic cells.
@@ -52,7 +71,8 @@ For more complex usage see example project. It shows how to use it to achieve hi
 ## TODO
 
 * Add support for NSBackgroundColorAttributeName;
-* Detect URLs / hashtags / usernames.
+* Add highlighted state for URLs;
+* Fix issue with different font sizes in one text block. 
 
 ## Contact
 
