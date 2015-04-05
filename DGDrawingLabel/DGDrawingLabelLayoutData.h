@@ -8,14 +8,28 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, DGDrawingLabelLinkType) {
+    DGDrawingLabelLinkTypeUsername,
+    DGDrawingLabelLinkTypeHashtag,
+    DGDrawingLabelLinkTypeURL
+};
+
 #ifdef __cplusplus
 #include <vector>
-typedef struct
-{
-    float offset;
+typedef struct {
+    float horizontalOffset;
+    float verticalOffset;
     NSTextAlignment alignment;
     CGFloat lineWidth;
 } DGDrawingLabelLinePosition;
+
+typedef struct {
+    NSRange range;
+    DGDrawingLabelLinkType linkType;
+    NSString *link;
+    
+    NSMutableArray *rects;
+} DGDrawingLabelLinkData;
 #endif
 
 @interface DGDrawingLabelLayoutData : NSObject
@@ -25,6 +39,8 @@ typedef struct
 
 #ifdef __cplusplus
 - (std::vector<DGDrawingLabelLinePosition> *)lineOrigins;
+- (std::vector<DGDrawingLabelLinkData> *)links;
+- (DGDrawingLabelLinkData)linkAtPoint:(CGPoint)point;
 #endif
 
 @end

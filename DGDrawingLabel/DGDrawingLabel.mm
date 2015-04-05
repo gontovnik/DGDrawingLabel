@@ -8,6 +8,14 @@
 
 #import "DGDrawingLabel.h"
 
+@interface DGDrawingLabel () {
+    BOOL isTouchMoved;
+}
+
+@property (nonatomic, assign) DGDrawingLabelLinkData selectedLinkData;
+
+@end
+
 @implementation DGDrawingLabel
 
 #pragma mark -
@@ -20,6 +28,53 @@
     [super setFrame:frame];
 }
 
+- (void)setSelectedLinkData:(DGDrawingLabelLinkData)selectedLinkData {
+    _selectedLinkData = selectedLinkData;
+    [self setNeedsDisplay]; // TODO: Redraw with highlighted link
+}
+
+#pragma mark -
+#pragma mark Getters
+
++ (NSArray *)arrayOfLinksForType:(DGDrawingLabelLinkType)linkType inText:(NSString *)text {
+    switch (linkType) {
+        case DGDrawingLabelLinkTypeHashtag:
+        {
+            NSError *error = nil;
+            NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"(?<!\\w)#([\\w\\_]+)?"
+                                                                              options:0
+                                                                                error:&error];
+            if (!error) {
+                return [regex matchesInString:text options:0 range:NSMakeRange(0, text.length)];
+            }
+            break;
+        }
+        case DGDrawingLabelLinkTypeUsername:
+        {
+            NSError *error = nil;
+            NSRegularExpression *regex = [[NSRegularExpression alloc] initWithPattern:@"(?<!\\w)@([\\w\\_]+)?"
+                                                                              options:0
+                                                                                error:&error];
+            if (!error) {
+                return [regex matchesInString:text options:0 range:NSMakeRange(0, text.length)];
+            }
+            break;
+        }
+        case DGDrawingLabelLinkTypeURL:
+        {
+            NSError *error = nil;
+            NSDataDetector *detector = [[NSDataDetector alloc] initWithTypes:NSTextCheckingTypeLink error:&error];
+            if (!error) {
+                return [detector matchesInString:text options:0 range:NSMakeRange(0, text.length)];
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    return nil;
+}
+
 #pragma mark -
 #pragma mark Calculating layout
 
@@ -28,11 +83,17 @@
                                         textAlignment:(NSTextAlignment)textAlignment
                                             textColor:(UIColor *)textColor
                                              maxWidth:(float)maxWidth
+                                        linkDetection:(DGDrawingLabelDetection)linkDetection
+                                       linkAttributes:(NSDictionary *)linkAttributes
                                      attributedRanges:(NSArray *)attributedRanges {
     
     if (!text) {
         return nil;
     }
+    
+    [DGDrawingLabel arrayOfLinksForType:DGDrawingLabelLinkTypeURL inText:text];
+    [DGDrawingLabel arrayOfLinksForType:DGDrawingLabelLinkTypeHashtag inText:text];
+    [DGDrawingLabel arrayOfLinksForType:DGDrawingLabelLinkTypeUsername inText:text];
     
     DGDrawingLabelLayoutData *layout = [[DGDrawingLabelLayoutData alloc] init];
     
@@ -48,6 +109,8 @@
     
     float fontAscent = CTFontGetAscent(fontRef);
     float fontDescent = CTFontGetDescent(fontRef);
+    
+    // TODO: Fix issue with differents fonts at the same time
     float fontLineHeight = floorf(fontAscent + fontDescent);
     
     NSDictionary *attributes = @{(NSString *)kCTFontAttributeName : (__bridge id)fontRef,
@@ -64,12 +127,49 @@
         }];
     }
     
-    std::vector<DGDrawingLabelLinePosition> *pLineOrigins = layout.lineOrigins;
+    std::vector<DGDrawingLabelLinkData> *links = layout.links;
+    
+    if (linkDetection & DGDrawingLabelDetectionURLs) {
+        NSArray *URLs = [DGDrawingLabel arrayOfLinksForType:DGDrawingLabelLinkTypeURL inText:text];
+        [URLs enumerateObjectsUsingBlock:^(NSTextCheckingResult *textCheckingResult, NSUInteger idx, BOOL *stop) {
+            DGDrawingLabelLinkData link = { .linkType = DGDrawingLabelLinkTypeURL, .link = [text substringWithRange:textCheckingResult.range], .range = textCheckingResult.range };
+            links->push_back(link);
+        }];
+    }
+    
+    if (linkDetection & DGDrawingLabelDetectionHashtags) {
+        NSArray *hashtags = [DGDrawingLabel arrayOfLinksForType:DGDrawingLabelLinkTypeHashtag inText:text];
+        [hashtags enumerateObjectsUsingBlock:^(NSTextCheckingResult *textCheckingResult, NSUInteger idx, BOOL *stop) {
+            DGDrawingLabelLinkData link = { .linkType = DGDrawingLabelLinkTypeHashtag, .link = [text substringWithRange:textCheckingResult.range], .range = textCheckingResult.range };
+            links->push_back(link);
+        }];
+    }
+    
+    if (linkDetection & DGDrawingLabelDetectionUsernames) {
+        NSArray *usernames = [DGDrawingLabel arrayOfLinksForType:DGDrawingLabelLinkTypeUsername inText:text];
+        [usernames enumerateObjectsUsingBlock:^(NSTextCheckingResult *textCheckingResult, NSUInteger idx, BOOL *stop) {
+            DGDrawingLabelLinkData link = { .linkType = DGDrawingLabelLinkTypeUsername, .link = [text substringWithRange:textCheckingResult.range], .range = textCheckingResult.range };
+            links->push_back(link);
+        }];
+    }
+    
+    if (!links->empty()) {
+        std::vector<DGDrawingLabelLinkData>::iterator linksBegin = layout.links->begin();
+        std::vector<DGDrawingLabelLinkData>::iterator linksEnd = layout.links->end();
+
+        if (linkAttributes) {
+            for (std::vector<DGDrawingLabelLinkData>::iterator linkIt = linksBegin; linkIt != linksEnd; linkIt++) {
+                [linkAttributes enumerateKeysAndObjectsUsingBlock:^(NSString *key, id attribute, BOOL *stop) {
+                    CFAttributedStringSetAttribute((CFMutableAttributedStringRef)string, CFRangeFromNSRange(linkIt->range), adjustKey(key), (__bridge CFTypeRef)attribute);
+                }];
+            }
+        }
+    }
+    
+    std::vector<DGDrawingLabelLinePosition> *lineOrigins = layout.lineOrigins;
     
     CGRect rect = CGRectZero;
-    
     NSMutableArray *textLines = [[NSMutableArray alloc] init];
-    
     CFIndex lastIndex = 0;
     float currentLineOffset = 0;
     
@@ -94,10 +194,26 @@
             float lineWidth = (float)CTLineGetTypographicBounds(line, NULL, NULL, NULL) - (float)CTLineGetTrailingWhitespaceWidth(line);
             
             currentLineOffset += fontLineHeight;
-            DGDrawingLabelLinePosition linePosition = { .offset = currentLineOffset,
-                .alignment = (rightAligned ? NSTextAlignmentRight : textAlignment),
-                .lineWidth = lineWidth};
-            pLineOrigins->push_back(linePosition);
+            
+            NSTextAlignment alignment = (rightAligned ? NSTextAlignmentRight : textAlignment);
+            CGFloat horizontalOffset = 0.0f;
+            switch (alignment) {
+                case NSTextAlignmentCenter:
+                    horizontalOffset = floorf((maxWidth - lineWidth) / 2.0f);
+                    break;
+                case NSTextAlignmentRight:
+                    horizontalOffset = maxWidth - lineWidth;
+                    break;
+                default:
+                    break;
+            }
+            
+            DGDrawingLabelLinePosition linePosition = { .horizontalOffset = static_cast<float>(horizontalOffset),
+                                                        .verticalOffset = currentLineOffset,
+                                                        .alignment = alignment,
+                                                        .lineWidth = lineWidth };
+            
+            lineOrigins->push_back(linePosition);
             
             rect.size.height += fontLineHeight;
             rect.size.width = MAX(rect.size.width, lineWidth);
@@ -110,6 +226,58 @@
         }
         else {
             break;
+        }
+    }
+    
+    if (!links->empty()) {
+        CGSize layoutSize = layout.size;
+        
+        std::vector<DGDrawingLabelLinkData>::iterator linksBegin = layout.links->begin();
+        std::vector<DGDrawingLabelLinkData>::iterator linksEnd = layout.links->end();
+        
+        for (std::vector<DGDrawingLabelLinkData>::iterator linkIt = linksBegin; linkIt != linksEnd; linkIt++) {
+            
+            for (int lineIdx = 0; lineIdx < textLines.count; lineIdx++) {
+                CTLineRef line = (__bridge CTLineRef)[textLines objectAtIndex:lineIdx];
+                CFRange lineRange = CTLineGetStringRange(line);
+                
+                const DGDrawingLabelLinePosition &linePosition = lineOrigins->at(lineIdx);
+                CGPoint lineOrigin = CGPointMake(linePosition.horizontalOffset, linePosition.verticalOffset);
+                
+                NSRange intersectionRange = NSIntersectionRange(linkIt->range, NSMakeRange(lineRange.location, lineRange.length));
+                if (intersectionRange.length != 0) {
+                    float startX = 0.0f;
+                    float endX = 0.0f;
+                    
+                    startX = ceilf(CTLineGetOffsetForStringIndex(line, intersectionRange.location, NULL) + lineOrigin.x);
+                    endX = ceilf(CTLineGetOffsetForStringIndex(line, intersectionRange.location + intersectionRange.length, NULL) + lineOrigin.x);
+                    
+                    if (startX > endX) {
+                        float tmp = startX;
+                        startX = endX;
+                        endX = tmp;
+                    }
+                    
+                    bool tillEndOfLine = false;
+                    if (intersectionRange.location + intersectionRange.length >= lineRange.location + lineRange.length && ABS(endX - layoutSize.width) < 16)
+                    {
+                        tillEndOfLine = true;
+                        endX = layoutSize.width + lineOrigin.x;
+                    }
+                    
+                    CGRect region = CGRectMake(ceilf(startX - 3),
+                                               ceilf(lineOrigin.y - fontLineHeight + fontLineHeight * 0.1f),
+                                               ceilf(endX - startX + 6),
+                                               ceilf(fontLineHeight * 1.1));
+                    
+                    if (!linkIt->rects) {
+                        linkIt->rects = [NSMutableArray array];
+                    }
+                    NSValue *regionValue = [NSValue valueWithCGRect:region];
+                    [linkIt->rects addObject:regionValue];
+                }
+            }
+            
         }
     }
     
@@ -127,23 +295,31 @@
                                                  font:(UIFont *)font
                                         textAlignment:(NSTextAlignment)textAlignment
                                             textColor:(UIColor *)textColor
-                                             maxWidth:(float)maxWidth {
+                                             maxWidth:(float)maxWidth
+                                        linkDetection:(DGDrawingLabelDetection)linkDetection
+                                       linkAttributes:(NSDictionary *)linkAttributes {
     return [DGDrawingLabel calculateLayoutWithText:text
                                               font:font
                                      textAlignment:textAlignment
                                          textColor:textColor
                                           maxWidth:maxWidth
+                                     linkDetection:linkDetection
+                                    linkAttributes:linkAttributes
                                   attributedRanges:nil];
 }
 
 + (DGDrawingLabelLayoutData *)calculateLayoutWithText:(NSString *)text
                                                  font:(UIFont *)font
-                                             maxWidth:(float)maxWidth {
+                                             maxWidth:(float)maxWidth
+                                        linkDetection:(DGDrawingLabelDetection)linkDetection
+                                       linkAttributes:(NSDictionary *)linkAttributes {
     return [DGDrawingLabel calculateLayoutWithText:text
                                               font:font
                                      textAlignment:NSTextAlignmentLeft
                                          textColor:[UIColor blackColor]
                                           maxWidth:maxWidth
+                                     linkDetection:linkDetection
+                                    linkAttributes:linkAttributes
                                   attributedRanges:nil];
 }
 
@@ -160,6 +336,10 @@ CFStringRef adjustKey(NSString *key) {
     }
     
     return (__bridge CFStringRef)key;
+}
+
+NSRange NSRangeFromCFRange(CFRange range) {
+    return NSMakeRange(range.location, range.length);
 }
 
 #pragma mark -
@@ -187,11 +367,11 @@ CFStringRef adjustKey(NSString *key) {
     
     NSRange linesRange = NSMakeRange(0, numberOfLines);
     
-    const std::vector<DGDrawingLabelLinePosition> *pLineOrigins = precalculatedLayout.lineOrigins;
+    const std::vector<DGDrawingLabelLinePosition> *lineOrigins = precalculatedLayout.lineOrigins;
     
     CGFloat lineHeight = rect.size.height;
-    if (pLineOrigins->size() > 1) {
-        lineHeight = ABS(pLineOrigins->at(0).offset - pLineOrigins->at(1).offset);
+    if (lineOrigins->size() > 1) {
+        lineHeight = ABS(lineOrigins->at(0).verticalOffset - lineOrigins->at(1).verticalOffset);
     }
     
     CGFloat upperOriginBound = clipRect.origin.y;
@@ -200,21 +380,9 @@ CFStringRef adjustKey(NSString *key) {
     for (CFIndex lineIndex = linesRange.location; lineIndex < linesRange.location + linesRange.length; lineIndex++) {
         CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, lineIndex);
         
-        const DGDrawingLabelLinePosition &linePosition = pLineOrigins->at(lineIndex);
+        const DGDrawingLabelLinePosition &linePosition = lineOrigins->at(lineIndex);
         
-        CGFloat horizontalOffset = 0.0f;
-        switch (linePosition.alignment) {
-            case NSTextAlignmentCenter:
-                horizontalOffset = floorf((rect.size.width - linePosition.lineWidth) / 2.0f);
-                break;
-            case NSTextAlignmentRight:
-                horizontalOffset = rect.size.width - linePosition.lineWidth;
-                break;
-            default:
-                break;
-        }
-        
-        CGPoint lineOrigin = CGPointMake(horizontalOffset, linePosition.offset);
+        CGPoint lineOrigin = CGPointMake(linePosition.horizontalOffset, linePosition.verticalOffset);
         
         if (lineOrigin.y < upperOriginBound || lineOrigin.y > lowerOriginBound) {
             continue;
@@ -225,6 +393,54 @@ CFStringRef adjustKey(NSString *key) {
     }
     
     CGContextRestoreGState(context);
+}
+
+#pragma mark -
+#pragma mark Touches
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    isTouchMoved = NO;
+    
+    CGPoint touchLocation = [[touches anyObject] locationInView:self];
+    DGDrawingLabelLinkData linkData = [self.precalculatedLayout linkAtPoint:touchLocation];
+    
+    if (linkData.link) {
+        self.selectedLinkData = linkData;
+    } else {
+        [super touchesBegan:touches withEvent:event];
+    }
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesMoved:touches withEvent:event];
+    isTouchMoved = YES;
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesEnded:touches withEvent:event];
+    
+    if (isTouchMoved) {
+        self.selectedLinkData = {};
+        return;
+    }
+    
+    CGPoint touchLocation = [[touches anyObject] locationInView:self];
+    DGDrawingLabelLinkData linkData = [self.precalculatedLayout linkAtPoint:touchLocation];
+    
+    if (linkData.link) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(drawingLabel:didPressAtLink:withType:)]) {
+            [self.delegate drawingLabel:self didPressAtLink:linkData.link withType:linkData.linkType];
+        }
+    } else {
+        [super touchesBegan:touches withEvent:event];
+    }
+    
+    self.selectedLinkData = {};
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    [super touchesCancelled:touches withEvent:event];
+    self.selectedLinkData = {};
 }
 
 @end

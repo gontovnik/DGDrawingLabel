@@ -12,6 +12,8 @@
 
 @interface NewsTableViewCell : UITableViewCell
 
+@property (nonatomic) id<DGDrawingLabelDelegate> drawingLabelDelegate;
+
 - (void)setPrecalculatedLayout:(DGDrawingLabelLayoutData *)precalculatedLayout;
 
 + (CGFloat)heightWithLayout:(DGDrawingLabelLayoutData *)layout;

@@ -13,7 +13,7 @@
 
 #import "NewsModel.h"
 
-@interface NewsViewController () <UITableViewDataSource, UITableViewDelegate> {
+@interface NewsViewController () <UITableViewDataSource, UITableViewDelegate, DGDrawingLabelDelegate> {
     UITableView *_tableView;
     NSArray *_news;
 }
@@ -64,9 +64,7 @@
     if (!model.precalculatedLayout) {
         
         NSRange range = [model.text rangeOfString:@"and"];
-        DGDrawingLabelAttributedRange *attributedRange = [[DGDrawingLabelAttributedRange alloc] initWithAttributes:@{NSForegroundColorAttributeName : [UIColor redColor],
-                                                                                                                     NSFontAttributeName : [UIFont boldSystemFontOfSize:20],
-                                                                                                                     NSBackgroundColorAttributeName : [UIColor yellowColor]} range:range];
+        DGDrawingLabelAttributedRange *attributedRange = [[DGDrawingLabelAttributedRange alloc] initWithAttributes:@{NSForegroundColorAttributeName : [UIColor redColor], NSFontAttributeName : [UIFont boldSystemFontOfSize:16]} range:range];
         NSArray *attributedRanges = @[attributedRange];
         
         model.precalculatedLayout = [DGDrawingLabel calculateLayoutWithText:model.text
@@ -74,6 +72,8 @@
                                                               textAlignment:NSTextAlignmentCenter
                                                                   textColor:[UIColor grayColor]
                                                                    maxWidth:_tableView.bounds.size.width
+                                                              linkDetection:(DGDrawingLabelDetectionHashtags | DGDrawingLabelDetectionURLs | DGDrawingLabelDetectionUsernames)
+                                                             linkAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:0.0f green:0.3f blue:0.8f alpha:1.0f]}
                                                            attributedRanges:attributedRanges];
     }
     return model.precalculatedLayout;
@@ -94,6 +94,7 @@
     NewsTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([NewsTableViewCell class]) forIndexPath:indexPath];
     
     [cell setPrecalculatedLayout:[self precalculatedLayoutForModelAtIndexPath:indexPath]];
+    cell.drawingLabelDelegate = self;
     
     return cell;
 }
@@ -103,6 +104,18 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return [NewsTableViewCell heightWithLayout:[self precalculatedLayoutForModelAtIndexPath:indexPath]];
+}
+
+#pragma mark -
+#pragma mark DGDrawingLabel Delegate
+
+- (void)drawingLabel:(DGDrawingLabel *)drawingLabel didPressAtLink:(NSString *)link withType:(DGDrawingLabelLinkType)linkType {
+    NSLog(@"%@", link);
+    
+    if (linkType == DGDrawingLabelLinkTypeURL) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:link]];
+    }
+    
 }
 
 @end

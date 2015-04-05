@@ -10,6 +10,7 @@
 
 @interface DGDrawingLabelLayoutData () {
     std::vector<DGDrawingLabelLinePosition> _lineOrigins;
+    std::vector<DGDrawingLabelLinkData> _links;
 }
 
 @end
@@ -18,6 +19,29 @@
 
 - (std::vector<DGDrawingLabelLinePosition> *)lineOrigins {
     return &_lineOrigins;
+}
+
+- (std::vector<DGDrawingLabelLinkData> *)links {
+    return &_links;
+}
+
+- (DGDrawingLabelLinkData)linkAtPoint:(CGPoint)point {
+    std::vector<DGDrawingLabelLinkData>::iterator linksBegin = self.links->begin();
+    std::vector<DGDrawingLabelLinkData>::iterator linksEnd = self.links->end();
+
+    __block DGDrawingLabelLinkData linkData;
+    for (std::vector<DGDrawingLabelLinkData>::iterator linkIt = linksBegin; linkIt != linksEnd; linkIt++) {
+        [linkIt->rects enumerateObjectsUsingBlock:^(NSValue *rectValue, NSUInteger idx, BOOL *stop) {
+            if (CGRectContainsPoint([rectValue CGRectValue], point)) {
+                linkData = (*linkIt);
+                *stop = YES;
+            }
+        }];
+        if (linkData.link) {
+            break;
+        }
+    }
+    return linkData;
 }
 
 @end

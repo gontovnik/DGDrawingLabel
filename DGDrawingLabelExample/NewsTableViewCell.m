@@ -46,6 +46,10 @@ static const CGFloat kVerticalSpacing = 10.0f;
     textLabel.frame = frame;
 }
 
+- (void)setDrawingLabelDelegate:(id<DGDrawingLabelDelegate>)drawingLabelDelegate {
+    textLabel.delegate = drawingLabelDelegate;
+}
+
 #pragma mark -
 #pragma mark Getters
 
@@ -57,9 +61,9 @@ static const CGFloat kVerticalSpacing = 10.0f;
 #pragma mark Reuse
 
 - (void)prepareForReuse {
-    [super prepareForReuse];
-    
     textLabel.precalculatedLayout = nil;
+    
+    [super prepareForReuse];
 }
 
 @end
