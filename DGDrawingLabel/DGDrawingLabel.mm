@@ -83,17 +83,13 @@
                                         textAlignment:(NSTextAlignment)textAlignment
                                             textColor:(UIColor *)textColor
                                              maxWidth:(float)maxWidth
-                                        linkDetection:(DGDrawingLabelDetection)linkDetection
+                                        linkDetection:(int)linkDetection
                                        linkAttributes:(NSDictionary *)linkAttributes
                                      attributedRanges:(NSArray *)attributedRanges {
     
     if (!text) {
         return nil;
     }
-    
-    [DGDrawingLabel arrayOfLinksForType:DGDrawingLabelLinkTypeURL inText:text];
-    [DGDrawingLabel arrayOfLinksForType:DGDrawingLabelLinkTypeHashtag inText:text];
-    [DGDrawingLabel arrayOfLinksForType:DGDrawingLabelLinkTypeUsername inText:text];
     
     DGDrawingLabelLayoutData *layout = [[DGDrawingLabelLayoutData alloc] init];
     
@@ -296,7 +292,7 @@
                                         textAlignment:(NSTextAlignment)textAlignment
                                             textColor:(UIColor *)textColor
                                              maxWidth:(float)maxWidth
-                                        linkDetection:(DGDrawingLabelDetection)linkDetection
+                                        linkDetection:(int)linkDetection
                                        linkAttributes:(NSDictionary *)linkAttributes {
     return [DGDrawingLabel calculateLayoutWithText:text
                                               font:font
@@ -311,7 +307,7 @@
 + (DGDrawingLabelLayoutData *)calculateLayoutWithText:(NSString *)text
                                                  font:(UIFont *)font
                                              maxWidth:(float)maxWidth
-                                        linkDetection:(DGDrawingLabelDetection)linkDetection
+                                        linkDetection:(int)linkDetection
                                        linkAttributes:(NSDictionary *)linkAttributes {
     return [DGDrawingLabel calculateLayoutWithText:text
                                               font:font

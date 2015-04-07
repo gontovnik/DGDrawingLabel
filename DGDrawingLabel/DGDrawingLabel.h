@@ -29,7 +29,7 @@ typedef enum {
                                         textAlignment:(NSTextAlignment)textAlignment
                                             textColor:(UIColor *)textColor
                                              maxWidth:(float)maxWidth
-                                        linkDetection:(DGDrawingLabelDetection)linkDetection
+                                        linkDetection:(int)linkDetection
                                        linkAttributes:(NSDictionary *)linkAttributes
                                      attributedRanges:(NSArray *)attributedRanges;
 
@@ -38,13 +38,13 @@ typedef enum {
                                         textAlignment:(NSTextAlignment)textAlignment
                                             textColor:(UIColor *)textColor
                                              maxWidth:(float)maxWidth
-                                        linkDetection:(DGDrawingLabelDetection)linkDetection
+                                        linkDetection:(int)linkDetection
                                        linkAttributes:(NSDictionary *)linkAttributes;
 
 + (DGDrawingLabelLayoutData *)calculateLayoutWithText:(NSString *)text
                                                  font:(UIFont *)font
                                              maxWidth:(float)maxWidth
-                                        linkDetection:(DGDrawingLabelDetection)linkDetection
+                                        linkDetection:(int)linkDetection
                                        linkAttributes:(NSDictionary *)linkAttributes;
 
 + (void)drawTextInRect:(CGRect)rect withPrecalculatedLayout:(DGDrawingLabelLayoutData *)precalculatedLayout;

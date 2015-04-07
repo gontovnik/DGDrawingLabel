@@ -72,7 +72,7 @@
                                                               textAlignment:NSTextAlignmentCenter
                                                                   textColor:[UIColor grayColor]
                                                                    maxWidth:_tableView.bounds.size.width
-                                                              linkDetection:(DGDrawingLabelDetectionHashtags | DGDrawingLabelDetectionURLs | DGDrawingLabelDetectionUsernames)
+                                                              linkDetection:(DGDrawingLabelDetectionHashtags | DGDrawingLabelDetectionUsernames | DGDrawingLabelDetectionURLs)
                                                              linkAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithRed:0.0f green:0.3f blue:0.8f alpha:1.0f]}
                                                            attributedRanges:attributedRanges];
     }
