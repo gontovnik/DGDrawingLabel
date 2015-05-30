@@ -428,7 +428,7 @@ NSRange NSRangeFromCFRange(CFRange range) {
             [self.delegate drawingLabel:self didPressAtLink:linkData.link withType:linkData.linkType];
         }
     } else {
-        [super touchesBegan:touches withEvent:event];
+        [super touchesEnded:touches withEvent:event];
     }
     
     self.selectedLinkData = {};
